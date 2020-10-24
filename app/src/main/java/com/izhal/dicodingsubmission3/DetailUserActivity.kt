@@ -34,7 +34,7 @@ class DetailUserActivity : AppCompatActivity() {
     login?.let { detailUserViewModel.setLogin(it) }
     detailUserViewModel.getUserDetail().observe(this, { userDetail ->
       if (userDetail != null) {
-        imgAvatarDetail.loadImage(userDetail.avatar_url)
+        imgAvatarDetail.loadImage(userDetail.avatarUrl)
 
         txtName.text = userDetail.name
         txtUsername.text = userDetail.login

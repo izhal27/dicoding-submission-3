@@ -44,9 +44,9 @@ class MainViewModel : ViewModel() {
               User(
                 id = jsonObj.getInt("id"),
                 login = jsonObj.getString("login"),
-                avatar_url = jsonObj.getString("avatar_url"),
+                avatarUrl = jsonObj.getString("avatar_url"),
                 url = jsonObj.getString("url"),
-                html_url = jsonObj.getString("html_url")
+                htmlUrl = jsonObj.getString("html_url")
               )
             )
           }

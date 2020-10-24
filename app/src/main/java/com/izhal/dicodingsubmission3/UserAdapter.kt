@@ -38,7 +38,7 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
   inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(user: User) {
-      itemView.imgAvatarDetail.loadImage(user.avatar_url)
+      itemView.imgAvatarDetail.loadImage(user.avatarUrl)
       val detailClickListener = View.OnClickListener {
         val intent = Intent(itemView.context, DetailUserActivity::class.java)
         intent.putExtra(EXTRA_LOGIN, user.login)
@@ -51,7 +51,7 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
       itemView.btnOpenDetail.setOnClickListener(detailClickListener)
       itemView.btnOpenRepo.setOnClickListener {
         val intent = Intent(itemView.context, WebViewActivity::class.java)
-        intent.putExtra(WebViewActivity.EXTRA_REPO_URL, user.html_url)
+        intent.putExtra(WebViewActivity.EXTRA_REPO_URL, user.htmlUrl)
         itemView.context.startActivity(intent)
       }
     }

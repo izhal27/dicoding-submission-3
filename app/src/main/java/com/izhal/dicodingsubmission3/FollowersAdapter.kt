@@ -29,11 +29,11 @@ class FollowersAdapter : RecyclerView.Adapter<FollowersAdapter.FollowersViewHold
 
   inner class FollowersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(user: User) {
-      itemView.imgFollower.loadImage(user.avatar_url)
+      itemView.imgFollower.loadImage(user.avatarUrl)
       itemView.txtName.text = user.login
       itemView.setOnClickListener {
         val intent = Intent(itemView.context, WebViewActivity::class.java)
-        intent.putExtra(WebViewActivity.EXTRA_REPO_URL, user.html_url)
+        intent.putExtra(WebViewActivity.EXTRA_REPO_URL, user.htmlUrl)
         itemView.context.startActivity(intent)
       }
     }

@@ -1,17 +1,20 @@
 package com.izhal.dicodingsubmission3
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 interface IUser {
   val id: Int
   val login: String
-  val avatar_url: String
+  val avatarUrl: String
   val url: String
-  val html_url: String
+  val htmlUrl: String
 }
-
+@Parcelize
 class User(
   override val id: Int,
   override val login: String,
-  override val avatar_url: String,
+  override val avatarUrl: String,
   override val url: String,
-  override val html_url: String
-) : IUser
+  override val htmlUrl: String
+) : IUser, Parcelable
