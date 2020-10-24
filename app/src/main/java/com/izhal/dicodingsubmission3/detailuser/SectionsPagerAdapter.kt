@@ -1,10 +1,13 @@
-package com.izhal.dicodingsubmission3
+package com.izhal.dicodingsubmission3.detailuser
 
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.izhal.dicodingsubmission3.R
+import com.izhal.dicodingsubmission3.followers.FollowersFragment
+import com.izhal.dicodingsubmission3.following.FollowingFragment
 
 class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
   FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
@@ -40,5 +43,4 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
   override fun getPageTitle(position: Int): CharSequence? {
     return context.resources.getString(TAB_TITLES[position])
   }
-
 }

@@ -1,29 +1,29 @@
-package com.izhal.dicodingsubmission3
+package com.izhal.dicodingsubmission3.detailuser
 
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.izhal.dicodingsubmission3.utils.StatusCode
+import com.izhal.dicodingsubmission3.model.UserDetail
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
 import cz.msebera.android.httpclient.Header
-import org.json.JSONArray
+import org.json.JSONObject
 
-class FollowersViewModel : ViewModel() {
+class DetailUserViewModel : ViewModel() {
   companion object {
-    private val TAG = FollowersViewModel::class.java.simpleName
+    private val TAG = DetailUserViewModel::class.java.simpleName
   }
 
-  private var listFollowers = MutableLiveData<ArrayList<User>>()
+  private var userDetail = MutableLiveData<UserDetail>()
 
   fun setLogin(login: String) {
-    val users = ArrayList<User>()
-
     val client = AsyncHttpClient()
     client.setUserAgent("Accept: application/vnd.github.v3+json")
 
-    val url = " https://api.github.com/users/$login/followers"
+    val url = "https://api.github.com/users/$login"
 
     client.get(url, object : AsyncHttpResponseHandler() {
       @SuppressLint("SetTextI18n")
@@ -34,22 +34,27 @@ class FollowersViewModel : ViewModel() {
       ) {
         try {
           val result = responseBody?.let { String(it) }
-          val jsonArray = result?.let { JSONArray(result) }
+          val res = result?.let { JSONObject(result) }
 
-          for (i in 0 until (jsonArray?.length() ?: 0)) {
-            val jsonObj = jsonArray!!.getJSONObject(i)
-            users.add(
-              User(
-                id = jsonObj.getInt("id"),
-                login = jsonObj.getString("login"),
-                avatarUrl = jsonObj.getString("avatar_url"),
-                url = jsonObj.getString("url"),
-                htmlUrl = jsonObj.getString("html_url")
-              )
+          if (res != null) {
+            val user = UserDetail(
+              id = res.getInt("id"),
+              login = res.getString("login"),
+              avatarUrl = res.getString("avatar_url"),
+              url = res.getString("url"),
+              htmlUrl = res.getString("html_url"),
+              name = res.getString("name"),
+              reposUrl = res.getString("repos_url"),
+              followersUrl = res.getString("followers_url"),
+              followingUrl = res.getString("following_url"),
+              location = res.getString("location"),
+              bio = res.getString("bio"),
+              followers = res.getInt("followers"),
+              following = res.getInt("following"),
             )
-          }
 
-          listFollowers.postValue(users)
+            userDetail.postValue(user)
+          }
         } catch (e: Exception) {
           e.printStackTrace()
           e.message?.let { Log.d(TAG, it) }
@@ -70,7 +75,7 @@ class FollowersViewModel : ViewModel() {
     })
   }
 
-  fun getFollowers(): LiveData<ArrayList<User>> {
-    return listFollowers
+  fun getUserDetail(): LiveData<UserDetail> {
+    return userDetail
   }
 }

@@ -1,4 +1,4 @@
-package com.izhal.dicodingsubmission3
+package com.izhal.dicodingsubmission3.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

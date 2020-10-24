@@ -1,10 +1,13 @@
-package com.izhal.dicodingsubmission3
+package com.izhal.dicodingsubmission3.detailuser
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import com.izhal.dicodingsubmission3.R
+import com.izhal.dicodingsubmission3.UserAdapter
+import com.izhal.dicodingsubmission3.utils.loadImage
 import kotlinx.android.synthetic.main.activity_detail_user.*
 import kotlinx.android.synthetic.main.toolbar.*
 

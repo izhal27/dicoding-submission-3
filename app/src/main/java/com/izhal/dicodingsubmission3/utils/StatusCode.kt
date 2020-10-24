@@ -1,4 +1,4 @@
-package com.izhal.dicodingsubmission3
+package com.izhal.dicodingsubmission3.utils
 
 class StatusCode {
   companion object {

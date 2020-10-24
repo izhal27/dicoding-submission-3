@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.izhal.dicodingsubmission3.detailuser.DetailUserActivity
+import com.izhal.dicodingsubmission3.model.User
+import com.izhal.dicodingsubmission3.utils.loadImage
 import kotlinx.android.synthetic.main.item_user.view.*
 
 class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {

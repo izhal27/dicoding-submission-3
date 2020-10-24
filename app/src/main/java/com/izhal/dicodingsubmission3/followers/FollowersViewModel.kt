@@ -1,21 +1,23 @@
-package com.izhal.dicodingsubmission3
+package com.izhal.dicodingsubmission3.followers
 
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.izhal.dicodingsubmission3.utils.StatusCode
+import com.izhal.dicodingsubmission3.model.User
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
 import cz.msebera.android.httpclient.Header
 import org.json.JSONArray
 
-class FollowingViewModel : ViewModel() {
+class FollowersViewModel : ViewModel() {
   companion object {
-    private val TAG = FollowingViewModel::class.java.simpleName
+    private val TAG = FollowersViewModel::class.java.simpleName
   }
 
-  private var listFollowing = MutableLiveData<ArrayList<User>>()
+  private var listFollowers = MutableLiveData<ArrayList<User>>()
 
   fun setLogin(login: String) {
     val users = ArrayList<User>()
@@ -23,7 +25,7 @@ class FollowingViewModel : ViewModel() {
     val client = AsyncHttpClient()
     client.setUserAgent("Accept: application/vnd.github.v3+json")
 
-    val url = " https://api.github.com/users/$login/following"
+    val url = " https://api.github.com/users/$login/followers"
 
     client.get(url, object : AsyncHttpResponseHandler() {
       @SuppressLint("SetTextI18n")
@@ -49,7 +51,7 @@ class FollowingViewModel : ViewModel() {
             )
           }
 
-          listFollowing.postValue(users)
+          listFollowers.postValue(users)
         } catch (e: Exception) {
           e.printStackTrace()
           e.message?.let { Log.d(TAG, it) }
@@ -70,7 +72,7 @@ class FollowingViewModel : ViewModel() {
     })
   }
 
-  fun getFollowing(): LiveData<ArrayList<User>> {
-    return listFollowing
+  fun getFollowers(): LiveData<ArrayList<User>> {
+    return listFollowers
   }
 }

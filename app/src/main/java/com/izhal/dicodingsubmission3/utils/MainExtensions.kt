@@ -1,4 +1,4 @@
-package com.izhal.dicodingsubmission3
+package com.izhal.dicodingsubmission3.utils
 
 import android.widget.ImageView
 import com.bumptech.glide.Glide

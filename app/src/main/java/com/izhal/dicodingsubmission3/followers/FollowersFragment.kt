@@ -1,4 +1,4 @@
-package com.izhal.dicodingsubmission3
+package com.izhal.dicodingsubmission3.followers
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.izhal.dicodingsubmission3.R
+import com.izhal.dicodingsubmission3.detailuser.SectionsPagerAdapter
 import kotlinx.android.synthetic.main.fragment_followers.*
 
 class FollowersFragment : Fragment() {

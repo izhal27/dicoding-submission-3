@@ -7,7 +7,7 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     android:orientation="vertical"
-    tools:context=".FollowersFragment">
+    tools:context=".followers.FollowersFragment">
 
     <ProgressBar
         android:id="@+id/progressBarFollowers"
