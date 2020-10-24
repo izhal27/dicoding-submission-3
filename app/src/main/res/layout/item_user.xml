@@ -12,8 +12,8 @@
 
         <ImageView
             android:id="@+id/imgAvatarDetail"
-            android:layout_width="100dp"
-            android:layout_height="120dp"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
             android:layout_margin="8dp"
             android:contentDescription="@string/avatar"
             android:src="@drawable/ic_launcher_background"
@@ -36,20 +36,27 @@
             app:layout_constraintStart_toEndOf="@+id/imgAvatarDetail"
             app:layout_constraintTop_toTopOf="@+id/imgAvatarDetail" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnOpenDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:text="@string/detail"
+            android:background="@drawable/roundcorner"
+            android:contentDescription="@string/detail"
+            android:padding="8dp"
+            android:src="@drawable/ic_detail_user"
             app:layout_constraintBottom_toBottomOf="@id/imgAvatarDetail"
             app:layout_constraintEnd_toStartOf="@id/btnOpenRepo" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnOpenRepo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:background="@drawable/roundcorner"
+            android:contentDescription="@string/repo"
+            android:padding="8dp"
+            android:src="@drawable/ic_repository"
             android:text="@string/repo"
             app:layout_constraintBottom_toBottomOf="@id/imgAvatarDetail"
             app:layout_constraintEnd_toEndOf="parent" />

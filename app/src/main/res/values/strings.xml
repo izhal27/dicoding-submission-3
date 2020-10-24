@@ -16,4 +16,5 @@
     <string name="tab_text_2">Following</string>
     <string name="repo">Repo</string>
     <string name="detail">Detail</string>
+    <string name="github_image">Github image</string>
 </resources>
