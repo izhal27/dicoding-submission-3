@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         if (users.size == 0) {
           showTxtListEmpty(true)
+          imgGithub.visibility = View.GONE
           txtEmptyList.text = "User not found"
         } else {
           showTxtListEmpty(false)
@@ -82,6 +83,6 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun showTxtListEmpty(state: Boolean) {
-    txtEmptyList.visibility = if (state) View.VISIBLE else View.INVISIBLE
+    containerEmptyList.visibility = if (state) View.VISIBLE else View.INVISIBLE
   }
 }

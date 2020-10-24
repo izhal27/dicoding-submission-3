@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/container_empty_list"
+        android:id="@+id/containerEmptyList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -30,6 +30,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/imgGithub"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
