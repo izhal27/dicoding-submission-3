@@ -18,6 +18,7 @@ class DetailUserViewModel : ViewModel() {
   }
 
   private var userDetail = MutableLiveData<UserDetail>()
+  private var currentUserDetail: UserDetail? = null
 
   fun setLogin(login: String) {
     val client = AsyncHttpClient()
@@ -38,7 +39,8 @@ class DetailUserViewModel : ViewModel() {
 
           if (res != null) {
             val user = UserDetail(
-              id = res.getInt("id"),
+              id = 0,
+              g_id = res.getInt("id"),
               login = res.getString("login"),
               avatarUrl = res.getString("avatar_url"),
               url = res.getString("url"),
@@ -53,6 +55,7 @@ class DetailUserViewModel : ViewModel() {
               following = res.getInt("following"),
             )
 
+            currentUserDetail = user
             userDetail.postValue(user)
           }
         } catch (e: Exception) {
@@ -75,7 +78,16 @@ class DetailUserViewModel : ViewModel() {
     })
   }
 
+  fun setUserDetail(existingUser: UserDetail?) {
+    currentUserDetail = existingUser
+    userDetail.postValue(existingUser)
+  }
+
   fun getUserDetail(): LiveData<UserDetail> {
     return userDetail
+  }
+
+  fun getCurrentUserDetail(): UserDetail? {
+    return currentUserDetail
   }
 }

@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 interface IUser {
-  val id: Int
+  val g_id: Int
   val login: String
   val avatarUrl: String
   val url: String
@@ -12,7 +12,7 @@ interface IUser {
 }
 @Parcelize
 class User(
-  override val id: Int,
+  override val g_id: Int,
   override val login: String,
   override val avatarUrl: String,
   override val url: String,

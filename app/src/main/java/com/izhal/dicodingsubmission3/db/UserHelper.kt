@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import com.izhal.dicodingsubmission3.db.DatabaseContract.*
+import com.izhal.dicodingsubmission3.db.DatabaseContract.UserColumns.Companion.LOGIN
 import com.izhal.dicodingsubmission3.db.DatabaseContract.UserColumns.Companion.TABLE_NAME
 import com.izhal.dicodingsubmission3.db.DatabaseContract.UserColumns.Companion._ID
 import java.sql.SQLException
@@ -63,6 +64,19 @@ class UserHelper(context: Context) {
     )
   }
 
+  fun getByLoginId(loginId: String): Cursor {
+    return db.query(
+      DB_TABLE,
+      null,
+      "$LOGIN = ?",
+      arrayOf(loginId),
+      null,
+      null,
+      null,
+      null
+    )
+  }
+
   fun insert(values: ContentValues?): Long {
     return db.insert(DB_TABLE, null, values)
   }
@@ -73,5 +87,9 @@ class UserHelper(context: Context) {
 
   fun delete(id: String): Int {
     return db.delete(DB_TABLE, "$_ID =  ?", arrayOf(id))
+  }
+
+  fun deleteByLogin(loginId: String): Int {
+    return db.delete(DB_TABLE, "$LOGIN =  ?", arrayOf(loginId))
   }
 }

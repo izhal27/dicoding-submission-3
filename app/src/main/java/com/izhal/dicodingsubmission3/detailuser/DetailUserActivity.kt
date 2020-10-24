@@ -1,19 +1,32 @@
 package com.izhal.dicodingsubmission3.detailuser
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.ContentValues
+import android.database.SQLException
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.izhal.dicodingsubmission3.R
 import com.izhal.dicodingsubmission3.UserAdapter
+import com.izhal.dicodingsubmission3.db.DatabaseContract
+import com.izhal.dicodingsubmission3.db.UserHelper
+import com.izhal.dicodingsubmission3.helper.MappingHelper
+import com.izhal.dicodingsubmission3.helper.Messages
+import com.izhal.dicodingsubmission3.model.UserDetail
 import com.izhal.dicodingsubmission3.utils.loadImage
 import kotlinx.android.synthetic.main.activity_detail_user.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class DetailUserActivity : AppCompatActivity() {
+  companion object {
+    private val TAG = DetailUserActivity::class.simpleName
+  }
+
   private lateinit var detailUserViewModel: DetailUserViewModel
   var login: String? = null
+  private lateinit var userHelper: UserHelper
+  private var userDetail: UserDetail? = null
 
   private var statusFavorite = false
 
@@ -34,7 +47,21 @@ class DetailUserActivity : AppCompatActivity() {
       this,
       ViewModelProvider.NewInstanceFactory()
     ).get(DetailUserViewModel::class.java)
-    login?.let { detailUserViewModel.setLogin(it) }
+
+    userHelper = UserHelper(applicationContext)
+    userHelper.open()
+
+    userDetail = login?.let { MappingHelper.mapCursorToObject(userHelper.getByLoginId(it)) }
+
+    // jika user sudah ada di database maka,
+    // set user di viewmodel sesuai user yang didapat dari database,
+    // jika tidak, ambil data user dari server github
+    if (userDetail != null) {
+      detailUserViewModel.setUserDetail(userDetail)
+    } else {
+      login?.let { detailUserViewModel.setLogin(it) }
+    }
+
     detailUserViewModel.getUserDetail().observe(this, { userDetail ->
       if (userDetail != null) {
         imgAvatarDetail.loadImage(userDetail.avatarUrl)
@@ -47,6 +74,13 @@ class DetailUserActivity : AppCompatActivity() {
 
         progressBar.visibility = View.INVISIBLE
         containerName.visibility = View.VISIBLE
+
+        // jika id lebih dari 0, maka user sudah ada di database
+        if (userDetail.id > 0) {
+          statusFavorite = true
+          toggleFavoriteIcon(statusFavorite)
+        }
+
         btnFavorite.visibility = View.VISIBLE
       }
     })
@@ -57,13 +91,63 @@ class DetailUserActivity : AppCompatActivity() {
     }
   }
 
-  private fun setButtonStatusFavorite(statusFavorite: Boolean) {
-    if (statusFavorite) {
+  override fun onDestroy() {
+    super.onDestroy()
+    userHelper.close()
+  }
+
+  private fun setButtonStatusFavorite(status: Boolean) {
+    if (status) {
+      val userDetail = detailUserViewModel.getCurrentUserDetail()
+
+      if (userDetail != null) {
+        val values = ContentValues()
+        userDetail.apply {
+          values.put(DatabaseContract.UserColumns.G_ID, g_id)
+          values.put(DatabaseContract.UserColumns.LOGIN, login)
+          values.put(DatabaseContract.UserColumns.AVATAR_URL, avatarUrl)
+          values.put(DatabaseContract.UserColumns.URL, url)
+          values.put(DatabaseContract.UserColumns.HTML_URL, htmlUrl)
+          values.put(DatabaseContract.UserColumns.NAME, name)
+          values.put(DatabaseContract.UserColumns.REPOS_URL, reposUrl)
+          values.put(DatabaseContract.UserColumns.FOLLOWERS_URL, followersUrl)
+          values.put(DatabaseContract.UserColumns.FOLLOWING_URL, followingUrl)
+          values.put(DatabaseContract.UserColumns.LOCATION, location)
+          values.put(DatabaseContract.UserColumns.BIO, bio)
+          values.put(DatabaseContract.UserColumns.FOLLOWERS, followers)
+          values.put(DatabaseContract.UserColumns.FOLLOWING, following)
+        }
+
+        try {
+          userHelper.insert(values)
+        } catch (ex: SQLException) {
+          ex.printStackTrace()
+          ex.message?.let { Log.d(TAG, it) }
+        }
+
+        Messages.showToast(this, "User berhasil ditambahkan ke daftar Favorit")
+      }
+    } else {
+      if (login != null) {
+        try {
+          userHelper.deleteByLogin(login!!)
+        } catch (ex: SQLException) {
+          ex.printStackTrace()
+          ex.message?.let { Log.d(TAG, it) }
+        }
+
+        Messages.showToast(this, "User berhasil dihapus dari daftar Favorit")
+      }
+    }
+
+    toggleFavoriteIcon(status)
+  }
+
+  private fun toggleFavoriteIcon(status: Boolean) {
+    if (status) {
       btnFavorite.setImageResource(R.drawable.ic_heart_full_white)
-      Toast.makeText(this, "User berhasil ditambahkan ke daftar Favorit", Toast.LENGTH_SHORT).show()
     } else {
       btnFavorite.setImageResource(R.drawable.ic_heart_white)
-      Toast.makeText(this, "User berhasil dihapus dari daftar Favorit", Toast.LENGTH_SHORT).show()
     }
   }
 

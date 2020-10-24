@@ -4,6 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 interface IUserDetail {
+  val id: Int
   val name: String
   val reposUrl: String
   val followersUrl: String
@@ -17,6 +18,7 @@ interface IUserDetail {
 @Parcelize
 class UserDetail(
   override val id: Int,
+  override val g_id: Int,
   override val login: String,
   override val avatarUrl: String,
   override val url: String,

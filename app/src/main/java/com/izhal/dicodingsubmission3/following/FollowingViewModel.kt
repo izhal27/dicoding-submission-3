@@ -42,7 +42,7 @@ class FollowingViewModel : ViewModel() {
             val jsonObj = jsonArray!!.getJSONObject(i)
             users.add(
               User(
-                id = jsonObj.getInt("id"),
+                g_id = jsonObj.getInt("id"),
                 login = jsonObj.getString("login"),
                 avatarUrl = jsonObj.getString("avatar_url"),
                 url = jsonObj.getString("url"),
