@@ -17,4 +17,5 @@
     <string name="repo">Repo</string>
     <string name="detail">Detail</string>
     <string name="github_image">Github image</string>
+    <string name="favorite_button">Favorite button</string>
 </resources>

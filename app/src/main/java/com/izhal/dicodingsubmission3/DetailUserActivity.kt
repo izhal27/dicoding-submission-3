@@ -3,6 +3,7 @@ package com.izhal.dicodingsubmission3
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_detail_user.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -10,6 +11,8 @@ import kotlinx.android.synthetic.main.toolbar.*
 class DetailUserActivity : AppCompatActivity() {
   private lateinit var detailUserViewModel: DetailUserViewModel
   var login: String? = null
+
+  private var statusFavorite = false
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -41,8 +44,24 @@ class DetailUserActivity : AppCompatActivity() {
 
         progressBar.visibility = View.INVISIBLE
         containerName.visibility = View.VISIBLE
+        btnFavorite.visibility = View.VISIBLE
       }
     })
+
+    btnFavorite.setOnClickListener {
+      statusFavorite = !statusFavorite
+      setButtonStatusFavorite(statusFavorite)
+    }
+  }
+
+  private fun setButtonStatusFavorite(statusFavorite: Boolean) {
+    if (statusFavorite) {
+      btnFavorite.setImageResource(R.drawable.ic_heart_full_white)
+      Toast.makeText(this, "User berhasil ditambahkan ke daftar Favorit", Toast.LENGTH_SHORT).show()
+    } else {
+      btnFavorite.setImageResource(R.drawable.ic_heart_white)
+      Toast.makeText(this, "User berhasil dihapus dari daftar Favorit", Toast.LENGTH_SHORT).show()
+    }
   }
 
   override fun onSupportNavigateUp(): Boolean {
