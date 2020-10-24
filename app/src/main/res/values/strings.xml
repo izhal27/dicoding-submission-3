@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Github User\'s Search</string>
+    <string name="risal_walangadi">Risal Walangadi</string>
+    <string name="splash_image">Splash Image</string>
+    <string name="search">Search</string>
+    <string name="name_user">Name</string>
+    <string name="avatar">Avatar</string>
+    <string name="search_hint">Search User</string>
+    <string name="empty_list_hint">Search Github User</string>
+    <string name="location">Location</string>
+    <string name="username">Username</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="dummy_int_value">27</string>
+    <string name="tab_text_1">Followers</string>
+    <string name="tab_text_2">Following</string>
+    <string name="repo">Repo</string>
+    <string name="detail">Detail</string>
+</resources>
