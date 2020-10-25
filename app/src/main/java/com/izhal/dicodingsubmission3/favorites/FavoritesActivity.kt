@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.izhal.dicodingsubmission3.R
 import com.izhal.dicodingsubmission3.UserAdapter
+import com.izhal.dicodingsubmission3.WebViewActivity
 import com.izhal.dicodingsubmission3.db.UserHelper
 import com.izhal.dicodingsubmission3.detailuser.DetailUserActivity
 import com.izhal.dicodingsubmission3.helper.MappingHelper
@@ -33,10 +34,18 @@ class FavoritesActivity : AppCompatActivity() {
     listFavorites.layoutManager = LinearLayoutManager(this)
     listFavorites.adapter = adapter
 
-    adapter.setOnItemClickCallback(object : OnItemClickCallback<UserDetail> {
-      override fun onItemClicked(data: UserDetail) {
+    adapter.setOnButtonDetailClickCallback(object : OnItemClickCallback<UserDetail> {
+      override fun onClicked(data: UserDetail) {
         val intent = Intent(this@FavoritesActivity, DetailUserActivity::class.java)
         intent.putExtra(UserAdapter.EXTRA_LOGIN, data.login)
+        startActivity(intent)
+      }
+    })
+
+    adapter.setOnButtonRepoClickCallback(object : OnItemClickCallback<UserDetail> {
+      override fun onClicked(data: UserDetail) {
+        val intent = Intent(this@FavoritesActivity, WebViewActivity::class.java)
+        intent.putExtra(WebViewActivity.EXTRA_REPO_URL, data.htmlUrl)
         startActivity(intent)
       }
     })

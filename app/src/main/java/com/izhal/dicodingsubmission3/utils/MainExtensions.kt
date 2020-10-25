@@ -14,5 +14,5 @@ fun ImageView.loadImage(url: String?) {
 }
 
 interface OnItemClickCallback<T> {
-  fun onItemClicked(data: T)
+  fun onClicked(data: T)
 }
