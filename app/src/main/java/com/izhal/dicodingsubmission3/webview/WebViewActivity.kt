@@ -1,4 +1,4 @@
-package com.izhal.dicodingsubmission3
+package com.izhal.dicodingsubmission3.webview
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.izhal.dicodingsubmission3.R
 import kotlinx.android.synthetic.main.activity_webview.*
 import kotlinx.android.synthetic.main.activity_webview.progressBar
 
@@ -20,6 +21,7 @@ class WebViewActivity : AppCompatActivity() {
     setContentView(R.layout.activity_webview)
 
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    supportActionBar?.title = "User's Repository"
     containerWebview.bringChildToFront(progressBar)
 
     val repoUrl = intent.getStringExtra(EXTRA_REPO_URL)

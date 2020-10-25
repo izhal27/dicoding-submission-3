@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.izhal.dicodingsubmission3.R
-import com.izhal.dicodingsubmission3.WebViewActivity
+import com.izhal.dicodingsubmission3.webview.WebViewActivity
 import com.izhal.dicodingsubmission3.utils.loadImage
 import com.izhal.dicodingsubmission3.model.User
 import kotlinx.android.synthetic.main.item_follower.view.*

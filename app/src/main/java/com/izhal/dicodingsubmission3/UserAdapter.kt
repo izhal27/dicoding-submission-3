@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.izhal.dicodingsubmission3.detailuser.DetailUserActivity
 import com.izhal.dicodingsubmission3.model.User
 import com.izhal.dicodingsubmission3.utils.loadImage
+import com.izhal.dicodingsubmission3.webview.WebViewActivity
 import kotlinx.android.synthetic.main.item_user.view.*
 
 class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {

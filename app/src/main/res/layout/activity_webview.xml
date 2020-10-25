@@ -4,7 +4,7 @@
     android:id="@+id/containerWebview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WebViewActivity">
+    tools:context=".webview.WebViewActivity">
 
     <ProgressBar
         android:id="@+id/progressBar"

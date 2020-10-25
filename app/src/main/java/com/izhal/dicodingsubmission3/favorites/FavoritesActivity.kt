@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.izhal.dicodingsubmission3.R
 import com.izhal.dicodingsubmission3.UserAdapter
-import com.izhal.dicodingsubmission3.WebViewActivity
+import com.izhal.dicodingsubmission3.webview.WebViewActivity
 import com.izhal.dicodingsubmission3.db.UserHelper
 import com.izhal.dicodingsubmission3.detailuser.DetailUserActivity
 import com.izhal.dicodingsubmission3.helper.MappingHelper

@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".favorites.FavoritesActivity"></activity>
-        <activity android:name=".WebViewActivity" />
+        <activity android:name=".webview.WebViewActivity" />
         <activity android:name=".detailuser.DetailUserActivity" />
         <activity
             android:name=".SplashScreenActivity"
