@@ -47,7 +47,7 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.FavoritesHolder>(
 
   inner class FavoritesHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(userDetail: UserDetail) {
-      itemView.imgAvatarDetail.loadImage(userDetail.avatarUrl)
+      itemView.imgUser.loadImage(userDetail.avatarUrl)
       itemView.txtName.text = userDetail.login
 
       itemView.btnOpenDetail.setOnClickListener { onButtonDetailClickCallback?.onClicked(userDetail) }
