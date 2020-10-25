@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.izhal.dicodingsubmission3.following.FollowingViewModel
 import com.izhal.dicodingsubmission3.utils.StatusCode
 import com.izhal.dicodingsubmission3.model.User
 import com.loopj.android.http.AsyncHttpClient

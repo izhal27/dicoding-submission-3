@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.izhal.dicodingsubmission3.R
 import com.izhal.dicodingsubmission3.followers.FollowersFragment
-import com.izhal.dicodingsubmission3.following.FollowingFragment
 import com.izhal.dicodingsubmission3.utils.STATUS_FOLLOW
 
 class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
