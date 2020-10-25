@@ -98,6 +98,10 @@ class DetailUserActivity : AppCompatActivity() {
   }
 
   private fun setButtonStatusFavorite(status: Boolean) {
+    if (!userHelper.isOpen()) {
+      userHelper.open()
+    }
+
     if (status) {
       val userDetail = detailUserViewModel.getCurrentUserDetail()
 
