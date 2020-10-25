@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.izhal.dicodingsubmission3.R
 import com.izhal.dicodingsubmission3.followers.FollowersFragment
 import com.izhal.dicodingsubmission3.following.FollowingFragment
+import com.izhal.dicodingsubmission3.utils.STATUS_FOLLOW
 
 class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
   FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
@@ -28,12 +29,16 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
 
     when (position) {
       0 -> {
-        fragment = FollowersFragment()
-        fragment.arguments = bundle
+        fragment = login?.let {
+          FollowersFragment(it, STATUS_FOLLOW.FOLLOWERS)
+        }
+        fragment?.arguments = bundle
       }
       1 -> {
-        fragment = FollowingFragment()
-        fragment.arguments = bundle
+        fragment = login?.let {
+          FollowersFragment(it, STATUS_FOLLOW.FOLLOWING)
+        }
+        fragment?.arguments = bundle
       }
     }
 

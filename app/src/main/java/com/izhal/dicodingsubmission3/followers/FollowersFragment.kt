@@ -11,14 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.izhal.dicodingsubmission3.R
 import com.izhal.dicodingsubmission3.UserAdapter
 import com.izhal.dicodingsubmission3.detailuser.DetailUserActivity
-import com.izhal.dicodingsubmission3.detailuser.SectionsPagerAdapter
 import com.izhal.dicodingsubmission3.model.User
-import com.izhal.dicodingsubmission3.model.UserDetail
 import com.izhal.dicodingsubmission3.utils.OnItemClickCallback
+import com.izhal.dicodingsubmission3.utils.STATUS_FOLLOW
 import com.izhal.dicodingsubmission3.webview.WebViewActivity
 import kotlinx.android.synthetic.main.fragment_followers.*
 
-class FollowersFragment : Fragment() {
+class FollowersFragment(val login: String, val statusFollow: STATUS_FOLLOW) : Fragment() {
   private lateinit var followersViewModel: FollowersViewModel
   private lateinit var adapter: FollowersAdapter
 
@@ -33,10 +32,6 @@ class FollowersFragment : Fragment() {
     super.onViewCreated(view, savedInstanceState)
 
     showLoading(true)
-    var login: String? = null
-    arguments?.let {
-      login = it.get(SectionsPagerAdapter.EXTRA_LOGIN) as String?
-    }
 
     adapter = FollowersAdapter()
     adapter.notifyDataSetChanged()
@@ -65,12 +60,20 @@ class FollowersFragment : Fragment() {
       ViewModelProvider.NewInstanceFactory()
     ).get(FollowersViewModel::class.java)
 
-    login?.let { followersViewModel.setLogin(it) }
+    when (this.statusFollow) {
+      STATUS_FOLLOW.FOLLOWERS -> {
+        followersViewModel.setFollowersLogin(this.login)
+      }
+
+      STATUS_FOLLOW.FOLLOWING -> {
+        followersViewModel.setFollowingLogin(this.login)
+      }
+    }
 
     activity?.let {
-      followersViewModel.getFollowers().observe(it, { followers ->
-        if (followers != null) {
-          adapter.setData(followers)
+      followersViewModel.getUsers().observe(it, { users ->
+        if (users != null) {
+          adapter.setData(users)
         }
 
         showLoading(false)
