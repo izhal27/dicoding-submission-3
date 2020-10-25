@@ -1,21 +1,30 @@
 package com.izhal.dicodingsubmission3.followers
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.izhal.dicodingsubmission3.R
-import com.izhal.dicodingsubmission3.webview.WebViewActivity
 import com.izhal.dicodingsubmission3.utils.loadImage
 import com.izhal.dicodingsubmission3.model.User
-import kotlinx.android.synthetic.main.item_follower.view.*
+import com.izhal.dicodingsubmission3.utils.OnItemClickCallback
+import kotlinx.android.synthetic.main.item_user.view.*
 
 class FollowersAdapter : RecyclerView.Adapter<FollowersAdapter.FollowersViewHolder>() {
   private var followers = ArrayList<User>()
+  private var onButtonDetailClickCallback: OnItemClickCallback<User>? = null
+  private var onButtonRepoClickCallback: OnItemClickCallback<User>? = null
+
+  fun setOnButtonDetailClickCallback(onItemClickCallback: OnItemClickCallback<User>) {
+    this.onButtonDetailClickCallback = onItemClickCallback
+  }
+
+  fun setOnButtonRepoClickCallback(onItemClickCallback: OnItemClickCallback<User>) {
+    this.onButtonRepoClickCallback = onItemClickCallback
+  }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowersViewHolder {
-    val view = LayoutInflater.from(parent.context).inflate(R.layout.item_follower, parent, false)
+    val view = LayoutInflater.from(parent.context).inflate(R.layout.item_user, parent, false)
     return FollowersViewHolder(view)
   }
 
@@ -33,13 +42,10 @@ class FollowersAdapter : RecyclerView.Adapter<FollowersAdapter.FollowersViewHold
 
   inner class FollowersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(user: User) {
-      itemView.imgFollower.loadImage(user.avatarUrl)
+      itemView.imgUser.loadImage(user.avatarUrl)
       itemView.txtName.text = user.login
-      itemView.setOnClickListener {
-        val intent = Intent(itemView.context, WebViewActivity::class.java)
-        intent.putExtra(WebViewActivity.EXTRA_REPO_URL, user.htmlUrl)
-        itemView.context.startActivity(intent)
-      }
+      itemView.btnOpenDetail.setOnClickListener{ onButtonDetailClickCallback?.onClicked(user)}
+      itemView.btnOpenRepo.setOnClickListener{ onButtonRepoClickCallback?.onClicked(user)}
     }
   }
 }
