@@ -20,15 +20,18 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.FavoritesHolder>(
   }
 
   fun setOnButtonRepoClickCallback(onItemClickCallback: OnItemClickCallback<UserDetail>) {
-    this.onButtonDetailClickCallback = onItemClickCallback
+    this.onButtonRepoClickCallback = onItemClickCallback
   }
 
   fun setUserDetails(userDetails: ArrayList<UserDetail>) {
+    listUserDetails.clear()
     listUserDetails = userDetails
+    notifyDataSetChanged()
   }
 
-  fun clearUserDetails() {
+  fun clearData() {
     listUserDetails.clear()
+    notifyDataSetChanged()
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesHolder {

@@ -67,10 +67,9 @@ class FavoritesActivity : AppCompatActivity() {
         adapter.setUserDetails(userDetails)
         status = View.INVISIBLE
       } else {
-        adapter.clearUserDetails()
+        adapter.clearData()
       }
 
-      adapter.notifyDataSetChanged()
       imgEmptyFavorites.visibility = status
     })
   }
