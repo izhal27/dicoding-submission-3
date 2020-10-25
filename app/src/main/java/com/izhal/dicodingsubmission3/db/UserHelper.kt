@@ -31,6 +31,10 @@ class UserHelper(context: Context) {
     db = dbHelper.writableDatabase
   }
 
+  fun isOpen(): Boolean {
+    return db.isOpen()
+  }
+
   fun close() {
     dbHelper.close()
 
