@@ -18,4 +18,6 @@
     <string name="detail">Detail</string>
     <string name="github_image">Github image</string>
     <string name="favorite_button">Favorite button</string>
+    <string name="favorites">Favorites</string>
+    <string name="settings">Settings</string>
 </resources>

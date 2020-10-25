@@ -35,6 +35,7 @@ class DetailUserActivity : AppCompatActivity() {
     setContentView(R.layout.activity_detail_user)
 
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    supportActionBar?.title = "Detail User"
     containerImage.bringChildToFront(progressBar)
 
     val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
@@ -48,7 +49,7 @@ class DetailUserActivity : AppCompatActivity() {
       ViewModelProvider.NewInstanceFactory()
     ).get(DetailUserViewModel::class.java)
 
-    userHelper = UserHelper(applicationContext)
+    userHelper = UserHelper.getInstance(this)
     userHelper.open()
 
     userDetail = login?.let { MappingHelper.mapCursorToObject(userHelper.getByLoginId(it)) }

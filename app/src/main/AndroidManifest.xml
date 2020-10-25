@@ -11,10 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.izhal.dicodingsubmission3.WebViewActivity"/>
-        <activity android:name="com.izhal.dicodingsubmission3.detailuser.DetailUserActivity" />
+        <activity android:name=".favorites.FavoritesActivity"></activity>
+        <activity android:name=".WebViewActivity" />
+        <activity android:name=".detailuser.DetailUserActivity" />
         <activity
-            android:name="com.izhal.dicodingsubmission3.SplashScreenActivity"
+            android:name=".SplashScreenActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.izhal.dicodingsubmission3.MainActivity" />
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

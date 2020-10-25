@@ -3,14 +3,16 @@ package com.izhal.dicodingsubmission3
 import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.izhal.dicodingsubmission3.favorites.FavoritesActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -32,7 +34,7 @@ class MainActivity : AppCompatActivity() {
       ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainViewModel::class.java)
 
 
-    mainViewModel.getUsers().observe(this, Observer { users ->
+    mainViewModel.getUsers().observe(this, { users ->
       if (users != null) {
         showLoading(false)
 
@@ -49,16 +51,14 @@ class MainActivity : AppCompatActivity() {
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
-    val inflater = menuInflater
-    inflater.inflate(R.menu.menu, menu)
+    menuInflater.inflate(R.menu.menu, menu)
 
     val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-    val searchView = menu.findItem(R.id.searchUser).actionView as SearchView
+    val searchView = menu.findItem(R.id.searchUserMenu).actionView as SearchView
 
     searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
     searchView.queryHint = resources.getString(R.string.search_hint)
     searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
       override fun onQueryTextSubmit(query: String): Boolean {
         if (query.isEmpty()) return false
 
@@ -75,7 +75,20 @@ class MainActivity : AppCompatActivity() {
       }
     })
 
-    return true
+    return super.onCreateOptionsMenu(menu)
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when (item.itemId) {
+      R.id.favoritesMenu -> {
+        val intent = Intent(this@MainActivity, FavoritesActivity::class.java)
+        startActivity(intent)
+      }
+
+      R.id.settingMenu -> {
+      }
+    }
+    return super.onContextItemSelected(item)
   }
 
   private fun showLoading(state: Boolean) {
