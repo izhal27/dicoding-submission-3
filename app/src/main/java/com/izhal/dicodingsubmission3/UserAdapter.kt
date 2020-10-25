@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.izhal.dicodingsubmission3.detailuser.DetailUserActivity
 import com.izhal.dicodingsubmission3.model.User
+import com.izhal.dicodingsubmission3.utils.OnItemClickCallback
 import com.izhal.dicodingsubmission3.utils.loadImage
 import com.izhal.dicodingsubmission3.webview.WebViewActivity
 import kotlinx.android.synthetic.main.item_user.view.*
@@ -17,6 +17,16 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
   }
 
   private var users = ArrayList<User>()
+  private var onButtonDetailClickCallback: OnItemClickCallback<User>? = null
+  private var onButtonRepoClickCallback: OnItemClickCallback<User>? = null
+
+  fun setOnButtonDetailClickCallback(onItemClickCallback: OnItemClickCallback<User>) {
+    this.onButtonDetailClickCallback = onItemClickCallback
+  }
+
+  fun setOnButtonRepoClickCallback(onItemClickCallback: OnItemClickCallback<User>) {
+    this.onButtonRepoClickCallback = onItemClickCallback
+  }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
     val view = LayoutInflater.from(parent.context).inflate(R.layout.item_user, parent, false)
@@ -43,20 +53,11 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
   inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(user: User) {
       itemView.imgAvatarDetail.loadImage(user.avatarUrl)
-      val detailClickListener = View.OnClickListener {
-        val intent = Intent(itemView.context, DetailUserActivity::class.java)
-        intent.putExtra(EXTRA_LOGIN, user.login)
-        itemView.context.startActivity(
-          intent
-        )
-      }
-
       itemView.txtName.text = user.login
-      itemView.btnOpenDetail.setOnClickListener(detailClickListener)
+
+      itemView.btnOpenDetail.setOnClickListener { onButtonDetailClickCallback?.onClicked(user) }
       itemView.btnOpenRepo.setOnClickListener {
-        val intent = Intent(itemView.context, WebViewActivity::class.java)
-        intent.putExtra(WebViewActivity.EXTRA_REPO_URL, user.htmlUrl)
-        itemView.context.startActivity(intent)
+        onButtonRepoClickCallback?.onClicked(user)
       }
     }
   }

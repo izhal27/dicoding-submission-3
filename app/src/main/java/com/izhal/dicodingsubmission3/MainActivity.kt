@@ -12,7 +12,11 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.izhal.dicodingsubmission3.detailuser.DetailUserActivity
 import com.izhal.dicodingsubmission3.favorites.FavoritesActivity
+import com.izhal.dicodingsubmission3.model.User
+import com.izhal.dicodingsubmission3.utils.OnItemClickCallback
+import com.izhal.dicodingsubmission3.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -29,6 +33,22 @@ class MainActivity : AppCompatActivity() {
 
     listUser.layoutManager = LinearLayoutManager(this)
     listUser.adapter = adapter
+
+    adapter.setOnButtonDetailClickCallback(object : OnItemClickCallback<User> {
+      override fun onClicked(data: User) {
+        val intent = Intent(this@MainActivity, DetailUserActivity::class.java)
+        intent.putExtra(UserAdapter.EXTRA_LOGIN, data.login)
+        startActivity(intent)
+      }
+    })
+
+    adapter.setOnButtonRepoClickCallback(object : OnItemClickCallback<User> {
+      override fun onClicked(data: User) {
+        val intent = Intent(this@MainActivity, WebViewActivity::class.java)
+        intent.putExtra(WebViewActivity.EXTRA_REPO_URL, data.htmlUrl)
+        startActivity(intent)
+      }
+    })
 
     mainViewModel =
       ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainViewModel::class.java)
