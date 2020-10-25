@@ -31,16 +31,15 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
         fragment = login?.let {
           FollowersFragment(it, STATUS_FOLLOW.FOLLOWERS)
         }
-        fragment?.arguments = bundle
       }
       1 -> {
         fragment = login?.let {
           FollowersFragment(it, STATUS_FOLLOW.FOLLOWING)
         }
-        fragment?.arguments = bundle
       }
     }
 
+    fragment?.arguments = bundle
     return fragment as Fragment
   }
 

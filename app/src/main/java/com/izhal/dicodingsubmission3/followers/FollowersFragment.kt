@@ -17,7 +17,7 @@ import com.izhal.dicodingsubmission3.utils.STATUS_FOLLOW
 import com.izhal.dicodingsubmission3.webview.WebViewActivity
 import kotlinx.android.synthetic.main.fragment_followers.*
 
-class FollowersFragment(val login: String, val statusFollow: STATUS_FOLLOW) : Fragment() {
+class FollowersFragment(private val login: String, private val statusFollow: STATUS_FOLLOW) : Fragment() {
   private lateinit var followersViewModel: FollowersViewModel
   private lateinit var adapter: FollowersAdapter
 
