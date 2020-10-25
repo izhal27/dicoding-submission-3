@@ -1,6 +1,5 @@
 package com.izhal.dicodingsubmission3
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.izhal.dicodingsubmission3.model.User
 import com.izhal.dicodingsubmission3.utils.OnItemClickCallback
 import com.izhal.dicodingsubmission3.utils.loadImage
-import com.izhal.dicodingsubmission3.webview.WebViewActivity
 import kotlinx.android.synthetic.main.item_user.view.*
 
 class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
@@ -52,7 +50,7 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
   inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(user: User) {
-      itemView.imgAvatarDetail.loadImage(user.avatarUrl)
+      itemView.imgUser.loadImage(user.avatarUrl)
       itemView.txtName.text = user.login
 
       itemView.btnOpenDetail.setOnClickListener { onButtonDetailClickCallback?.onClicked(user) }
