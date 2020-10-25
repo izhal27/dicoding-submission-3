@@ -16,3 +16,8 @@ fun ImageView.loadImage(url: String?) {
 interface OnItemClickCallback<T> {
   fun onClicked(data: T)
 }
+
+enum class STATUS_FOLLOW {
+  FOLLOWERS,
+  FOLLOWING
+}
