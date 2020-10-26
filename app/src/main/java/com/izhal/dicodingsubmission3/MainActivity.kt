@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.izhal.dicodingsubmission3.detailuser.DetailUserActivity
 import com.izhal.dicodingsubmission3.favorites.FavoritesActivity
 import com.izhal.dicodingsubmission3.model.User
+import com.izhal.dicodingsubmission3.settings.SettingsActivity
 import com.izhal.dicodingsubmission3.utils.OnItemClickCallback
 import com.izhal.dicodingsubmission3.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -106,6 +107,8 @@ class MainActivity : AppCompatActivity() {
       }
 
       R.id.settingMenu -> {
+        val intent = Intent(this@MainActivity, SettingsActivity::class.java)
+        startActivity(intent)
       }
     }
     return super.onContextItemSelected(item)

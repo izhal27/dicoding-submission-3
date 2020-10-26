@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".favorites.FavoritesActivity"></activity>
+        <activity android:name=".settings.SettingsActivity"></activity>
+        <activity android:name=".favorites.FavoritesActivity" />
         <activity android:name=".webview.WebViewActivity" />
         <activity android:name=".detailuser.DetailUserActivity" />
         <activity
