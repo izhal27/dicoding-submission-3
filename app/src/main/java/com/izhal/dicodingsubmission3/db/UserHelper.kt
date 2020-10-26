@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import com.izhal.dicodingsubmission3.db.DatabaseContract.*
 import com.izhal.dicodingsubmission3.db.DatabaseContract.UserColumns.Companion.LOGIN
 import com.izhal.dicodingsubmission3.db.DatabaseContract.UserColumns.Companion.TABLE_NAME
 import com.izhal.dicodingsubmission3.db.DatabaseContract.UserColumns.Companion._ID
@@ -13,7 +12,7 @@ import java.sql.SQLException
 class UserHelper(context: Context) {
   companion object {
     private const val DB_TABLE = TABLE_NAME
-    private lateinit var dbHelper: DatabaseHelper
+    private lateinit var dbHelper: DatabaseContract.DatabaseHelper
     private lateinit var db: SQLiteDatabase
 
     private var INSTANCE: UserHelper? = null
@@ -23,7 +22,7 @@ class UserHelper(context: Context) {
   }
 
   init {
-    dbHelper = DatabaseHelper(context)
+    dbHelper = DatabaseContract.DatabaseHelper(context)
   }
 
   @Throws(SQLException::class)

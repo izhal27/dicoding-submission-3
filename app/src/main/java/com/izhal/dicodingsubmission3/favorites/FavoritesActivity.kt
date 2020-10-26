@@ -1,13 +1,17 @@
 package com.izhal.dicodingsubmission3.favorites
 
 import android.content.Intent
+import android.database.ContentObserver
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.HandlerThread
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.izhal.dicodingsubmission3.R
 import com.izhal.dicodingsubmission3.UserAdapter
+import com.izhal.dicodingsubmission3.db.DatabaseContract.UserColumns.Companion.CONTENT_URI
 import com.izhal.dicodingsubmission3.webview.WebViewActivity
 import com.izhal.dicodingsubmission3.db.UserHelper
 import com.izhal.dicodingsubmission3.detailuser.DetailUserActivity
@@ -15,6 +19,10 @@ import com.izhal.dicodingsubmission3.helper.MappingHelper
 import com.izhal.dicodingsubmission3.model.UserDetail
 import com.izhal.dicodingsubmission3.utils.OnItemClickCallback
 import kotlinx.android.synthetic.main.activity_favorites.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class FavoritesActivity : AppCompatActivity() {
   private lateinit var adapter: FavoritesAdapter
@@ -27,6 +35,7 @@ class FavoritesActivity : AppCompatActivity() {
 
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
     supportActionBar?.title = "Favorites"
+    containerFavorites.bringChildToFront(progressBar)
 
     adapter = FavoritesAdapter()
     adapter.notifyDataSetChanged()
@@ -55,10 +64,16 @@ class FavoritesActivity : AppCompatActivity() {
       ViewModelProvider.NewInstanceFactory()
     ).get(FavoritesViewModel::class.java)
 
-    userHelper = UserHelper.getInstance(this)
-    userHelper.open()
+    val handlerThread = HandlerThread("DataObserver")
+    handlerThread.start()
+    val handler = Handler(handlerThread.looper)
+    val myObserver = object : ContentObserver(handler) {
+      override fun onChange(self: Boolean) {
+        getUsersAsync()
+      }
+    }
 
-    getAllUserDetails()
+    contentResolver.registerContentObserver(CONTENT_URI, true, myObserver)
 
     favoritesViewModel.getUserDetails().observe(this, { userDetails ->
       var status = View.VISIBLE
@@ -66,27 +81,50 @@ class FavoritesActivity : AppCompatActivity() {
       if (userDetails.size > 0) {
         adapter.setUserDetails(userDetails)
         status = View.INVISIBLE
-      } else {
-        adapter.clearData()
       }
 
       imgEmptyFavorites.visibility = status
     })
   }
 
-  private fun getAllUserDetails() {
-    val userDetails = MappingHelper.mapCursorToArrayList(userHelper.getAll())
-    favoritesViewModel.setUserDetails(userDetails)
+//  private fun getAllUserDetails() {
+//    val userDetails = MappingHelper.mapCursorToArrayList(userHelper.getAll())
+//    favoritesViewModel.setUserDetails(userDetails)
+//  }
+
+  private fun getUsersAsync() {
+    GlobalScope.launch(Dispatchers.Main) {
+      progressBar.visibility = View.VISIBLE
+
+      val deferredUsers = async(Dispatchers.IO) {
+        val cursor = contentResolver?.query(CONTENT_URI, null, null, null, null)
+        MappingHelper.mapCursorToArrayList(cursor)
+      }
+
+      val userDetails = deferredUsers.await()
+      progressBar.visibility = View.INVISIBLE
+      var status = View.VISIBLE
+
+      if (userDetails.size > 0) {
+        favoritesViewModel.setUserDetails(userDetails)
+        status = View.INVISIBLE
+      } else {
+        adapter.clearData()
+      }
+
+      imgEmptyFavorites.visibility = status
+    }
   }
 
   override fun onDestroy() {
     super.onDestroy()
-    userHelper.close()
+    //userHelper.close()
   }
 
   override fun onResume() {
     super.onResume()
-    getAllUserDetails()
+    //getAllUserDetails()
+    getUsersAsync()
   }
 
   override fun onSupportNavigateUp(): Boolean {

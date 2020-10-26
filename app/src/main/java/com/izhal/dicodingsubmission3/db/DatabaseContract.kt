@@ -3,9 +3,13 @@ package com.izhal.dicodingsubmission3.db
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.net.Uri
 import android.provider.BaseColumns
 
-internal class DatabaseContract {
+object DatabaseContract {
+  const val AUTHORITY = "com.izhal.dicodingsubmission3"
+  const val SCHEME = "content"
+
   internal class UserColumns : BaseColumns {
     companion object {
       const val TABLE_NAME = "users"
@@ -23,6 +27,11 @@ internal class DatabaseContract {
       const val BIO = "bio"
       const val FOLLOWERS = "followers"
       const val FOLLOWING = "following"
+
+      val CONTENT_URI: Uri = Uri.Builder().scheme(SCHEME)
+        .authority(AUTHORITY)
+        .appendPath(TABLE_NAME)
+        .build()
     }
   }
 

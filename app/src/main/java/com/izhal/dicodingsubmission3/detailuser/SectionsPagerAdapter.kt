@@ -2,9 +2,11 @@ package com.izhal.dicodingsubmission3.detailuser
 
 import android.content.Context
 import android.os.Bundle
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter
 import com.izhal.dicodingsubmission3.R
 import com.izhal.dicodingsubmission3.followers.FollowersFragment
 import com.izhal.dicodingsubmission3.utils.STATUS_FOLLOW
@@ -13,6 +15,7 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
   FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
   companion object {
     const val EXTRA_LOGIN = "extra_login"
+    const val EXTRA_STATUS = "extra_status"
   }
 
   private val TAB_TITLES = intArrayOf(R.string.tab_text_1, R.string.tab_text_2)
@@ -20,6 +23,10 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
   override fun getCount(): Int = TAB_TITLES.size
 
   override fun getItem(position: Int): Fragment {
+    return getFragment(position)
+  }
+
+  private fun getFragment(position: Int): Fragment {
     var fragment: Fragment? = null
 
     val login = (context as DetailUserActivity).login
@@ -28,14 +35,20 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
 
     when (position) {
       0 -> {
-        fragment = login?.let {
-          FollowersFragment(it, STATUS_FOLLOW.FOLLOWERS)
-        }
+        bundle.putString(EXTRA_STATUS, STATUS_FOLLOW.FOLLOWERS.toString())
+
+//        fragment = login?.let {
+//          FollowersFragment(it, STATUS_FOLLOW.FOLLOWERS)
+//        }
+        fragment = FollowersFragment()
       }
       1 -> {
-        fragment = login?.let {
-          FollowersFragment(it, STATUS_FOLLOW.FOLLOWING)
-        }
+        bundle.putString(EXTRA_STATUS, STATUS_FOLLOW.FOLLOWING.toString())
+
+//        fragment = login?.let {
+//          FollowersFragment(it, STATUS_FOLLOW.FOLLOWING)
+//        }
+        fragment = FollowersFragment()
       }
     }
 

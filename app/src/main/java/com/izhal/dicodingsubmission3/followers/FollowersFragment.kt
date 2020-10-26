@@ -11,15 +11,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.izhal.dicodingsubmission3.R
 import com.izhal.dicodingsubmission3.UserAdapter
 import com.izhal.dicodingsubmission3.detailuser.DetailUserActivity
+import com.izhal.dicodingsubmission3.detailuser.SectionsPagerAdapter
 import com.izhal.dicodingsubmission3.model.User
 import com.izhal.dicodingsubmission3.utils.OnItemClickCallback
 import com.izhal.dicodingsubmission3.utils.STATUS_FOLLOW
 import com.izhal.dicodingsubmission3.webview.WebViewActivity
 import kotlinx.android.synthetic.main.fragment_followers.*
 
-class FollowersFragment(private val login: String, private val statusFollow: STATUS_FOLLOW) : Fragment() {
+class FollowersFragment() : Fragment() {
   private lateinit var followersViewModel: FollowersViewModel
   private lateinit var adapter: FollowersAdapter
+  private var login: String? = null
+  private lateinit var status: STATUS_FOLLOW
 
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +33,10 @@ class FollowersFragment(private val login: String, private val statusFollow: STA
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+
+    login = activity?.intent?.getStringExtra(SectionsPagerAdapter.EXTRA_LOGIN)
+    val statusExtra = activity?.intent?.getStringExtra(SectionsPagerAdapter.EXTRA_STATUS)
+    status = if (statusExtra == STATUS_FOLLOW.FOLLOWERS.toString()) STATUS_FOLLOW.FOLLOWERS else STATUS_FOLLOW.FOLLOWING
 
     showLoading(true)
 
@@ -60,13 +67,13 @@ class FollowersFragment(private val login: String, private val statusFollow: STA
       ViewModelProvider.NewInstanceFactory()
     ).get(FollowersViewModel::class.java)
 
-    when (this.statusFollow) {
+    when (this.status) {
       STATUS_FOLLOW.FOLLOWERS -> {
-        followersViewModel.setFollowersLogin(this.login)
+        this.login?.let { followersViewModel.setFollowersLogin(it) }
       }
 
       STATUS_FOLLOW.FOLLOWING -> {
-        followersViewModel.setFollowingLogin(this.login)
+        this.login?.let { followersViewModel.setFollowingLogin(it) }
       }
     }
 

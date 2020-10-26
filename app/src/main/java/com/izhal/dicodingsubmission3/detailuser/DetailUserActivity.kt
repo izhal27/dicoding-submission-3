@@ -2,6 +2,7 @@ package com.izhal.dicodingsubmission3.detailuser
 
 import android.content.ContentValues
 import android.database.SQLException
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,7 +11,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.izhal.dicodingsubmission3.R
 import com.izhal.dicodingsubmission3.UserAdapter
 import com.izhal.dicodingsubmission3.db.DatabaseContract
-import com.izhal.dicodingsubmission3.db.UserHelper
+import com.izhal.dicodingsubmission3.db.DatabaseContract.AUTHORITY
+import com.izhal.dicodingsubmission3.db.DatabaseContract.SCHEME
+import com.izhal.dicodingsubmission3.db.DatabaseContract.UserColumns.Companion.CONTENT_URI
+import com.izhal.dicodingsubmission3.db.DatabaseContract.UserColumns.Companion.TABLE_NAME
 import com.izhal.dicodingsubmission3.helper.MappingHelper
 import com.izhal.dicodingsubmission3.helper.Messages
 import com.izhal.dicodingsubmission3.model.UserDetail
@@ -25,8 +29,8 @@ class DetailUserActivity : AppCompatActivity() {
 
   private lateinit var detailUserViewModel: DetailUserViewModel
   var login: String? = null
-  private lateinit var userHelper: UserHelper
   private var userDetail: UserDetail? = null
+  private lateinit var uriWithLogin: Uri
 
   private var statusFavorite = false
 
@@ -49,10 +53,17 @@ class DetailUserActivity : AppCompatActivity() {
       ViewModelProvider.NewInstanceFactory()
     ).get(DetailUserViewModel::class.java)
 
-    userHelper = UserHelper.getInstance(this)
-    userHelper.open()
+    uriWithLogin =
+      Uri.Builder().scheme(SCHEME).authority(AUTHORITY).appendPath(TABLE_NAME).appendQueryParameter(
+        "login",
+        this.login
+      ).build()
 
-    userDetail = login?.let { MappingHelper.mapCursorToObject(userHelper.getByLoginId(it)) }
+    val cursor = contentResolver.query(uriWithLogin, null, null, null, null)
+    cursor?.apply {
+      userDetail = MappingHelper.mapCursorToObject(this)
+      this.close()
+    }
 
     // jika user sudah ada di database maka,
     // set user di viewmodel sesuai user yang didapat dari database,
@@ -92,16 +103,7 @@ class DetailUserActivity : AppCompatActivity() {
     }
   }
 
-  override fun onDestroy() {
-    super.onDestroy()
-    userHelper.close()
-  }
-
   private fun setButtonStatusFavorite(status: Boolean) {
-    if (!userHelper.isOpen()) {
-      userHelper.open()
-    }
-
     if (status) {
       val userDetail = detailUserViewModel.getCurrentUserDetail()
 
@@ -124,7 +126,7 @@ class DetailUserActivity : AppCompatActivity() {
         }
 
         try {
-          userHelper.insert(values)
+          contentResolver.insert(CONTENT_URI, values)
         } catch (ex: SQLException) {
           ex.printStackTrace()
           ex.message?.let { Log.d(TAG, it) }
@@ -133,9 +135,10 @@ class DetailUserActivity : AppCompatActivity() {
         Messages.showToast(this, "User berhasil ditambahkan ke daftar Favorit")
       }
     } else {
-      if (login != null) {
+      if (userDetail?.id!! > 0) {
         try {
-          userHelper.deleteByLogin(login!!)
+          val uriWithId = Uri.parse(CONTENT_URI.toString() + "/" + userDetail?.id)
+          contentResolver.delete(uriWithId, null, null)
         } catch (ex: SQLException) {
           ex.printStackTrace()
           ex.message?.let { Log.d(TAG, it) }
