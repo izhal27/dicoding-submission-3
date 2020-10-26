@@ -9,13 +9,11 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
-import android.support.v4.media.MediaBrowserCompat
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.izhal.dicodingsubmission3.MainActivity
 import com.izhal.dicodingsubmission3.R
-import com.izhal.dicodingsubmission3.favorites.FavoritesActivity
 import java.util.*
 
 class AlarmReceiver : BroadcastReceiver() {
@@ -38,7 +36,7 @@ class AlarmReceiver : BroadcastReceiver() {
   private fun showAlarmNotification(context: Context, message: String) {
     val CHANNEL_ID = "Channel_1"
     val CHANNEL_NAME = "AlarmManager channel"
-    val intent = Intent(context, FavoritesActivity::class.java)
+    val intent = Intent(context, MainActivity::class.java)
     val pendingIntent = PendingIntent.getActivity(
       context,
       0,
