@@ -13,7 +13,6 @@ import com.izhal.dicodingsubmission3.R
 import com.izhal.dicodingsubmission3.UserAdapter
 import com.izhal.dicodingsubmission3.db.DatabaseContract.UserColumns.Companion.CONTENT_URI
 import com.izhal.dicodingsubmission3.webview.WebViewActivity
-import com.izhal.dicodingsubmission3.db.UserHelper
 import com.izhal.dicodingsubmission3.detailuser.DetailUserActivity
 import com.izhal.dicodingsubmission3.helper.MappingHelper
 import com.izhal.dicodingsubmission3.model.UserDetail
@@ -26,7 +25,6 @@ import kotlinx.coroutines.launch
 
 class FavoritesActivity : AppCompatActivity() {
   private lateinit var adapter: FavoritesAdapter
-  private lateinit var userHelper: UserHelper
   private lateinit var favoritesViewModel: FavoritesViewModel
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,11 +85,6 @@ class FavoritesActivity : AppCompatActivity() {
     })
   }
 
-//  private fun getAllUserDetails() {
-//    val userDetails = MappingHelper.mapCursorToArrayList(userHelper.getAll())
-//    favoritesViewModel.setUserDetails(userDetails)
-//  }
-
   private fun getUsersAsync() {
     GlobalScope.launch(Dispatchers.Main) {
       progressBar.visibility = View.VISIBLE
@@ -116,14 +109,8 @@ class FavoritesActivity : AppCompatActivity() {
     }
   }
 
-  override fun onDestroy() {
-    super.onDestroy()
-    //userHelper.close()
-  }
-
   override fun onResume() {
     super.onResume()
-    //getAllUserDetails()
     getUsersAsync()
   }
 

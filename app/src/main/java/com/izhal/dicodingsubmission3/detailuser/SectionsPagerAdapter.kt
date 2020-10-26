@@ -37,17 +37,11 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
       0 -> {
         bundle.putString(EXTRA_STATUS, STATUS_FOLLOW.FOLLOWERS.toString())
 
-//        fragment = login?.let {
-//          FollowersFragment(it, STATUS_FOLLOW.FOLLOWERS)
-//        }
         fragment = FollowersFragment()
       }
       1 -> {
         bundle.putString(EXTRA_STATUS, STATUS_FOLLOW.FOLLOWING.toString())
 
-//        fragment = login?.let {
-//          FollowersFragment(it, STATUS_FOLLOW.FOLLOWING)
-//        }
         fragment = FollowersFragment()
       }
     }
