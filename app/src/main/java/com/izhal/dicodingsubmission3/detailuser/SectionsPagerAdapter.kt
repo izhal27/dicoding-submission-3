@@ -2,11 +2,9 @@ package com.izhal.dicodingsubmission3.detailuser
 
 import android.content.Context
 import android.os.Bundle
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.fragment.app.FragmentStatePagerAdapter
 import com.izhal.dicodingsubmission3.R
 import com.izhal.dicodingsubmission3.followers.FollowersFragment
 import com.izhal.dicodingsubmission3.utils.STATUS_FOLLOW
@@ -28,6 +26,7 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
 
   private fun getFragment(position: Int): Fragment {
     var fragment: Fragment? = null
+    var status: String? = null
 
     val login = (context as DetailUserActivity).login
     val bundle = Bundle()
@@ -35,17 +34,16 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
 
     when (position) {
       0 -> {
-        bundle.putString(EXTRA_STATUS, STATUS_FOLLOW.FOLLOWERS.toString())
-
+        status = STATUS_FOLLOW.FOLLOWERS.toString()
         fragment = FollowersFragment()
       }
       1 -> {
-        bundle.putString(EXTRA_STATUS, STATUS_FOLLOW.FOLLOWING.toString())
-
+        status = STATUS_FOLLOW.FOLLOWING.toString()
         fragment = FollowersFragment()
       }
     }
 
+    bundle.putString(EXTRA_STATUS, status)
     fragment?.arguments = bundle
     return fragment as Fragment
   }

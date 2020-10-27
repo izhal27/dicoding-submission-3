@@ -1,9 +1,8 @@
 package com.izhal.dicodingsubmission3.settings
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.izhal.dicodingsubmission3.R
 import kotlinx.android.synthetic.main.activity_settings.*
 

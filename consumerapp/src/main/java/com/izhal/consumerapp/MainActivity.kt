@@ -2,11 +2,11 @@ package com.izhal.consumerapp
 
 import android.database.ContentObserver
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.izhal.consumerapp.db.DatabaseContract.UserColumns.Companion.CONTENT_URI

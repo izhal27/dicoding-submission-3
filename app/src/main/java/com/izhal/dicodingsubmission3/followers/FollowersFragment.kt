@@ -2,10 +2,11 @@ package com.izhal.dicodingsubmission3.followers
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.izhal.dicodingsubmission3.R
@@ -34,9 +35,10 @@ class FollowersFragment() : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    login = activity?.intent?.getStringExtra(SectionsPagerAdapter.EXTRA_LOGIN)
-    val statusExtra = activity?.intent?.getStringExtra(SectionsPagerAdapter.EXTRA_STATUS)
-    status = if (statusExtra == STATUS_FOLLOW.FOLLOWERS.toString()) STATUS_FOLLOW.FOLLOWERS else STATUS_FOLLOW.FOLLOWING
+    login = arguments?.getString(SectionsPagerAdapter.EXTRA_LOGIN)
+    val statusExtra = arguments?.getString(SectionsPagerAdapter.EXTRA_STATUS)
+    status =
+      if (statusExtra == STATUS_FOLLOW.FOLLOWERS.toString()) STATUS_FOLLOW.FOLLOWERS else STATUS_FOLLOW.FOLLOWING
 
     showLoading(true)
 

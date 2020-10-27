@@ -5,9 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.izhal.dicodingsubmission3.R
-import com.izhal.dicodingsubmission3.utils.loadImage
 import com.izhal.dicodingsubmission3.model.User
 import com.izhal.dicodingsubmission3.utils.OnItemClickCallback
+import com.izhal.dicodingsubmission3.utils.loadImage
 import kotlinx.android.synthetic.main.item_user.view.*
 
 class FollowersAdapter : RecyclerView.Adapter<FollowersAdapter.FollowersViewHolder>() {

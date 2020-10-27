@@ -2,21 +2,21 @@ package com.izhal.dicodingsubmission3.favorites
 
 import android.content.Intent
 import android.database.ContentObserver
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.izhal.dicodingsubmission3.R
 import com.izhal.dicodingsubmission3.UserAdapter
 import com.izhal.dicodingsubmission3.db.DatabaseContract.UserColumns.Companion.CONTENT_URI
-import com.izhal.dicodingsubmission3.webview.WebViewActivity
 import com.izhal.dicodingsubmission3.detailuser.DetailUserActivity
 import com.izhal.dicodingsubmission3.helper.MappingHelper
 import com.izhal.dicodingsubmission3.model.UserDetail
 import com.izhal.dicodingsubmission3.utils.OnItemClickCallback
+import com.izhal.dicodingsubmission3.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_favorites.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

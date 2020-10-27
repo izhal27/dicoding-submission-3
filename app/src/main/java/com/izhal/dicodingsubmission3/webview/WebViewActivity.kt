@@ -1,14 +1,13 @@
 package com.izhal.dicodingsubmission3.webview
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.appcompat.app.AppCompatActivity
 import com.izhal.dicodingsubmission3.R
 import kotlinx.android.synthetic.main.activity_webview.*
-import kotlinx.android.synthetic.main.activity_webview.progressBar
 
 class WebViewActivity : AppCompatActivity() {
   companion object {
