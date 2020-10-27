@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -37,6 +38,10 @@ class MainActivity : AppCompatActivity() {
 
     adapter.setOnButtonDetailClickCallback(object : OnItemClickCallback<User> {
       override fun onClicked(data: User) {
+
+        Log.d(MainActivity::class.java.simpleName, data.login)
+
+
         val intent = Intent(this@MainActivity, DetailUserActivity::class.java)
         intent.putExtra(UserAdapter.EXTRA_LOGIN, data.login)
         startActivity(intent)

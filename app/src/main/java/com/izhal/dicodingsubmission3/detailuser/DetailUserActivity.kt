@@ -11,10 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.izhal.dicodingsubmission3.R
 import com.izhal.dicodingsubmission3.UserAdapter
 import com.izhal.dicodingsubmission3.db.DatabaseContract
-import com.izhal.dicodingsubmission3.db.DatabaseContract.AUTHORITY
-import com.izhal.dicodingsubmission3.db.DatabaseContract.SCHEME
 import com.izhal.dicodingsubmission3.db.DatabaseContract.UserColumns.Companion.CONTENT_URI
-import com.izhal.dicodingsubmission3.db.DatabaseContract.UserColumns.Companion.TABLE_NAME
 import com.izhal.dicodingsubmission3.helper.MappingHelper
 import com.izhal.dicodingsubmission3.helper.Messages
 import com.izhal.dicodingsubmission3.model.UserDetail
@@ -30,7 +27,6 @@ class DetailUserActivity : AppCompatActivity() {
   private lateinit var detailUserViewModel: DetailUserViewModel
   var login: String? = null
   private var userDetail: UserDetail? = null
-  private lateinit var uriWithLogin: Uri
 
   private var statusFavorite = false
 
@@ -53,15 +49,17 @@ class DetailUserActivity : AppCompatActivity() {
       ViewModelProvider.NewInstanceFactory()
     ).get(DetailUserViewModel::class.java)
 
-    uriWithLogin =
-      Uri.Builder().scheme(SCHEME).authority(AUTHORITY).appendPath(TABLE_NAME).appendQueryParameter(
-        "login",
-        this.login
-      ).build()
-
-    val cursor = contentResolver.query(uriWithLogin, null, null, null, null)
+    val cursor = contentResolver.query(
+      CONTENT_URI,
+      null,
+      "${DatabaseContract.UserColumns.LOGIN} = ?",
+      arrayOf(this.login),
+      null
+    )
     cursor?.apply {
-      userDetail = MappingHelper.mapCursorToObject(this)
+      val arrayResult = MappingHelper.mapCursorToArrayList(this)
+      userDetail =
+        if (arrayResult.any { it.login == login }) arrayResult.filter { it.login == login }[0] else null
       this.close()
     }
 
@@ -71,7 +69,7 @@ class DetailUserActivity : AppCompatActivity() {
     if (userDetail != null) {
       detailUserViewModel.setUserDetail(userDetail)
     } else {
-      login?.let { detailUserViewModel.setLogin(it) }
+      this.login?.let { detailUserViewModel.setLogin(it) }
     }
 
     detailUserViewModel.getUserDetail().observe(this, { userDetail ->
